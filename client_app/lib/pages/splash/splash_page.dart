@@ -1,26 +1,7 @@
 import 'package:flutter/material.dart';
 
-class SplashPage extends StatefulWidget {
+class SplashPage extends StatelessWidget {
   const SplashPage({super.key});
-
-  @override
-  State<SplashPage> createState() => _SplashPageState();
-}
-
-class _SplashPageState extends State<SplashPage> {
-  @override
-  void initState() {
-    super.initState();
-    _navigateNext();
-  }
-
-  Future<void> _navigateNext() async {
-    await Future.delayed(const Duration(seconds: 2));
-    if (mounted) {
-      // Placeholder for now — Module 3 (Auth) will replace this
-      // with real logic: go to /home if logged in, /login if not.
-    }
-  }
 
   @override
   Widget build(BuildContext context) {

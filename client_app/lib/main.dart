@@ -4,6 +4,9 @@ import 'package:provider/provider.dart';
 import 'firebase_options.dart';
 import 'theme/app_theme.dart';
 import 'providers/theme_provider.dart';
+import 'providers/auth_provider.dart';
+import 'services/auth_service.dart';
+import 'repository/user_repository.dart';
 import 'utils/app_router.dart';
 
 void main() async {
@@ -19,20 +22,29 @@ class PocketKhorochApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // ---- Dependency Injection: services → repositories → providers ----
+    final authService = AuthService();
+    final userRepository = UserRepository();
+
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => ThemeProvider()),
-        // More providers will be added here in later modules
+        ChangeNotifierProvider(
+          create: (_) => AuthProvider(
+            authService: authService,
+            userRepository: userRepository,
+          ),
+        ),
       ],
-      child: Consumer<ThemeProvider>(
-        builder: (context, themeProvider, _) {
+      child: Consumer2<ThemeProvider, AuthProvider>(
+        builder: (context, themeProvider, authProvider, _) {
           return MaterialApp.router(
             title: 'Pocket Khoroch',
             debugShowCheckedModeBanner: false,
             theme: AppTheme.lightTheme,
             darkTheme: AppTheme.darkTheme,
             themeMode: themeProvider.themeMode,
-            routerConfig: AppRouter.router,
+            routerConfig: AppRouter.buildRouter(authProvider),
           );
         },
       ),

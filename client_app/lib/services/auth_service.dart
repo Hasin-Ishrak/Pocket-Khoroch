@@ -4,7 +4,8 @@ import 'package:google_sign_in/google_sign_in.dart';
 class AuthService {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   final GoogleSignIn _googleSignIn = GoogleSignIn(
-    clientId: 'YOUR_WEB_CLIENT_ID.apps.googleusercontent.com', // will replace with your real ID
+    clientId:
+        '625906855642-j4429ts2d3sdbiip45fnncg56bb6d013.apps.googleusercontent.com',
   );
 
   Stream<User?> get authStateChanges => _firebaseAuth.authStateChanges();
@@ -45,10 +46,7 @@ class AuthService {
   }
 
   Future<void> signOut() async {
-    await Future.wait([
-      _firebaseAuth.signOut(),
-      _googleSignIn.signOut(),
-    ]);
+    await Future.wait([_firebaseAuth.signOut(), _googleSignIn.signOut()]);
   }
 
   Future<void> sendPasswordResetEmail(String email) async {
