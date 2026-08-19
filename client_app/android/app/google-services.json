@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "625906855642",
+    "project_id": "pocket-khoroch-8b249",
+    "storage_bucket": "pocket-khoroch-8b249.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:625906855642:android:1e3f49c8d42f7ffc59ffe3",
+        "android_client_info": {
+          "package_name": "com.yourname.pocketkhoroch.client_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "625906855642-j4429ts2d3sdbiip45fnncg56bb6d013.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBXgbNAXw_CgqFxXZ2QauyRkQQ3Vtyh1Kw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "625906855642-j4429ts2d3sdbiip45fnncg56bb6d013.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
