@@ -1,0 +1,32 @@
+# Dart and Flutter tooling
+**/.dart_tool/
+**/.flutter-plugins
+**/.flutter-plugins-dependencies
+**/.packages
+**/.pub-cache/
+**/.pub/
+**/build/
+**/coverage/
+**/doc/api/
+
+# Generated Flutter platform files
+**/ios/Flutter/.last_build_id
+**/ios/Flutter/ephemeral/
+**/linux/flutter/ephemeral/
+**/macos/Flutter/ephemeral/
+**/windows/flutter/ephemeral/
+
+# IDE files
+**/*.iml
+**/.idea/
+
+# Logs and temporary files
+*.log
+*.swp
+*.tmp
+.DS_Store
+
+# Android build outputs
+**/android/app/debug/
+**/android/app/profile/
+**/android/app/release/
