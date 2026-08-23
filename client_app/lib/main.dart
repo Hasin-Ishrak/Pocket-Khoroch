@@ -12,12 +12,13 @@ import 'services/transaction_cloud_service.dart';
 import 'repository/user_repository.dart';
 import 'repository/transaction_repository.dart';
 import 'utils/app_router.dart';
+import 'providers/savings_provider.dart';
+import 'services/savings_cloud_service.dart';
+import 'repository/savings_repository.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await LocalStorageService.init();
   runApp(const PocketKhorochApp());
 }
@@ -37,6 +38,11 @@ class PocketKhorochApp extends StatelessWidget {
       localService: localStorageService,
       cloudService: transactionCloudService,
     );
+    final savingsCloudService = SavingsCloudService();
+    final savingsRepository = SavingsRepository(
+      localService: localStorageService,
+      cloudService: savingsCloudService,
+    );
 
     return MultiProvider(
       providers: [
@@ -49,6 +55,9 @@ class PocketKhorochApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (_) => TransactionProvider(repository: transactionRepository),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => SavingsProvider(repository: savingsRepository),
         ),
       ],
       child: Consumer2<ThemeProvider, AuthProvider>(

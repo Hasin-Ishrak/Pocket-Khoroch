@@ -6,6 +6,11 @@ import '../pages/home/home_page.dart';
 import '../pages/auth/login_page.dart';
 import '../pages/auth/signup_page.dart';
 import '../pages/auth/forgot_password_page.dart';
+import '../models/transaction_model.dart';
+import '../pages/transaction/add_transaction_page.dart';
+import '../pages/root_shell_page.dart';
+import '../pages/savings/goal_calculator_page.dart';
+import '../pages/savings/rate_projector_page.dart';
 
 class AppRouter {
   static GoRouter buildRouter(AuthProvider authProvider) {
@@ -13,14 +18,8 @@ class AppRouter {
       initialLocation: '/',
       refreshListenable: authProvider,
       routes: [
-        GoRoute(
-          path: '/',
-          builder: (context, state) => const SplashPage(),
-        ),
-        GoRoute(
-          path: '/login',
-          builder: (context, state) => const LoginPage(),
-        ),
+        GoRoute(path: '/', builder: (context, state) => const SplashPage()),
+        GoRoute(path: '/login', builder: (context, state) => const LoginPage()),
         GoRoute(
           path: '/signup',
           builder: (context, state) => const SignupPage(),
@@ -31,7 +30,26 @@ class AppRouter {
         ),
         GoRoute(
           path: '/home',
-          builder: (context, state) => const HomePage(),
+          builder: (context, state) => const RootShellPage(),
+        ),
+        GoRoute(
+          path: '/add-transaction',
+          builder: (context, state) => const AddTransactionPage(),
+        ),
+        GoRoute(
+          path: '/edit-transaction',
+          builder: (context, state) {
+            final transaction = state.extra as TransactionModel?;
+            return AddTransactionPage(existingTransaction: transaction);
+          },
+        ),
+        GoRoute(
+          path: '/goal-calculator',
+          builder: (context, state) => const GoalCalculatorPage(),
+        ),
+        GoRoute(
+          path: '/rate-projector',
+          builder: (context, state) => const RateProjectorPage(),
         ),
       ],
       redirect: (context, state) {
@@ -43,7 +61,8 @@ class AppRouter {
           return currentPath == '/' ? null : '/';
         }
 
-        final isAuthPage = currentPath == '/login' ||
+        final isAuthPage =
+            currentPath == '/login' ||
             currentPath == '/signup' ||
             currentPath == '/forgot-password';
 
