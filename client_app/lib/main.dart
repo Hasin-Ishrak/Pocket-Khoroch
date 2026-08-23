@@ -15,6 +15,9 @@ import 'utils/app_router.dart';
 import 'providers/savings_provider.dart';
 import 'services/savings_cloud_service.dart';
 import 'repository/savings_repository.dart';
+import 'providers/subscription_provider.dart';
+import 'services/subscription_api_service.dart';
+import 'repository/subscription_repository.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -34,6 +37,12 @@ class PocketKhorochApp extends StatelessWidget {
 
     final localStorageService = LocalStorageService();
     final transactionCloudService = TransactionCloudService();
+    final subscriptionApiService =
+        MockSubscriptionApiService(); // swap to BdAppsSubscriptionApiService later
+    final subscriptionRepository = SubscriptionRepository(
+      apiService: subscriptionApiService,
+    );
+
     final transactionRepository = TransactionRepository(
       localService: localStorageService,
       cloudService: transactionCloudService,
@@ -58,6 +67,10 @@ class PocketKhorochApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (_) => SavingsProvider(repository: savingsRepository),
+        ),
+        ChangeNotifierProvider(
+          create: (_) =>
+              SubscriptionProvider(repository: subscriptionRepository),
         ),
       ],
       child: Consumer2<ThemeProvider, AuthProvider>(

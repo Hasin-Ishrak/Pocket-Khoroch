@@ -7,6 +7,8 @@ import '../../widgets/balance_card.dart';
 import '../../widgets/transaction_tile.dart';
 import '../../widgets/empty_state.dart';
 import '../../providers/theme_provider.dart';
+import 'package:provider/provider.dart' show Consumer;
+import '../../providers/subscription_provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -86,6 +88,35 @@ class _HomePageState extends State<HomePage> {
                         expense: transactionProvider.totalExpense,
                       ),
                     ),
+                  ),
+                  Consumer<SubscriptionProvider>(
+                    builder: (context, subProvider, _) {
+                      if (subProvider.isPro)
+                        return const SliverToBoxAdapter(
+                          child: SizedBox.shrink(),
+                        );
+                      return SliverPadding(
+                        padding: const EdgeInsets.fromLTRB(20, 0, 20, 16),
+                        sliver: SliverToBoxAdapter(
+                          child: Card(
+                            color: Theme.of(
+                              context,
+                            ).colorScheme.primary.withOpacity(0.08),
+                            child: ListTile(
+                              leading: const Icon(
+                                Icons.workspace_premium_outlined,
+                              ),
+                              title: const Text('Unlock Pro features'),
+                              subtitle: const Text(
+                                'Analytics, AI chat, reminders & more',
+                              ),
+                              trailing: const Icon(Icons.chevron_right),
+                              onTap: () => context.push('/upgrade'),
+                            ),
+                          ),
+                        ),
+                      );
+                    },
                   ),
                   SliverPadding(
                     padding: const EdgeInsets.symmetric(horizontal: 20),

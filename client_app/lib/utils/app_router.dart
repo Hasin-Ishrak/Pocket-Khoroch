@@ -11,6 +11,8 @@ import '../pages/transaction/add_transaction_page.dart';
 import '../pages/root_shell_page.dart';
 import '../pages/savings/goal_calculator_page.dart';
 import '../pages/savings/rate_projector_page.dart';
+import '../pages/subscription/upgrade_page.dart';
+import '../pages/subscription/manage_subscription_page.dart';
 
 class AppRouter {
   static GoRouter buildRouter(AuthProvider authProvider) {
@@ -50,6 +52,14 @@ class AppRouter {
         GoRoute(
           path: '/rate-projector',
           builder: (context, state) => const RateProjectorPage(),
+        ),
+        GoRoute(
+          path: '/upgrade',
+          builder: (context, state) => const UpgradePage(),
+        ),
+        GoRoute(
+          path: '/manage-subscription',
+          builder: (context, state) => const ManageSubscriptionPage(),
         ),
       ],
       redirect: (context, state) {
