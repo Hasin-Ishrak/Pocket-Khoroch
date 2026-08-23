@@ -5,8 +5,12 @@ import 'firebase_options.dart';
 import 'theme/app_theme.dart';
 import 'providers/theme_provider.dart';
 import 'providers/auth_provider.dart';
+import 'providers/transaction_provider.dart';
 import 'services/auth_service.dart';
+import 'services/local_storage_service.dart';
+import 'services/transaction_cloud_service.dart';
 import 'repository/user_repository.dart';
+import 'repository/transaction_repository.dart';
 import 'utils/app_router.dart';
 
 void main() async {
@@ -14,6 +18,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  await LocalStorageService.init();
   runApp(const PocketKhorochApp());
 }
 
@@ -26,6 +31,13 @@ class PocketKhorochApp extends StatelessWidget {
     final authService = AuthService();
     final userRepository = UserRepository();
 
+    final localStorageService = LocalStorageService();
+    final transactionCloudService = TransactionCloudService();
+    final transactionRepository = TransactionRepository(
+      localService: localStorageService,
+      cloudService: transactionCloudService,
+    );
+
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => ThemeProvider()),
@@ -34,6 +46,9 @@ class PocketKhorochApp extends StatelessWidget {
             authService: authService,
             userRepository: userRepository,
           ),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => TransactionProvider(repository: transactionRepository),
         ),
       ],
       child: Consumer2<ThemeProvider, AuthProvider>(
