@@ -23,6 +23,10 @@ import 'repository/subscription_repository.dart';
 import 'providers/chat_provider.dart';
 import 'services/ai_service.dart';
 import 'repository/chat_repository.dart';
+import 'providers/reminder_provider.dart';
+import 'services/notification_service.dart';
+import 'services/reminder_cloud_service.dart';
+import 'repository/reminder_repository.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -35,6 +39,7 @@ void main() async {
   }
 
   await LocalStorageService.init();
+  await NotificationService.init();
   runApp(const PocketKhorochApp());
 }
 
@@ -67,6 +72,12 @@ class PocketKhorochApp extends StatelessWidget {
       cloudService: savingsCloudService,
     );
 
+    final reminderCloudService = ReminderCloudService();
+    final reminderRepository = ReminderRepository(
+      localService: localStorageService,
+      cloudService: reminderCloudService,
+    );
+
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => ThemeProvider()),
@@ -91,6 +102,9 @@ class PocketKhorochApp extends StatelessWidget {
             aiService: aiService,
             chatRepository: chatRepository,
           ),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => ReminderProvider(repository: reminderRepository),
         ),
       ],
       child: Consumer2<ThemeProvider, AuthProvider>(

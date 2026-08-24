@@ -3,6 +3,7 @@ import '../pages/home/home_page.dart';
 import '../pages/savings/savings_hub_page.dart';
 import '../pages/analytics/analytics_page.dart';
 import '../pages/chat/chat_page.dart';
+import '../pages/reminders/reminders_page.dart';
 
 class RootShellPage extends StatefulWidget {
   const RootShellPage({super.key});
@@ -19,6 +20,7 @@ class _RootShellPageState extends State<RootShellPage> {
     SavingsHubPage(),
     AnalyticsPage(),
     ChatPage(),
+    RemindersPage(),
   ];
 
   @override
@@ -33,6 +35,7 @@ class _RootShellPageState extends State<RootShellPage> {
           NavigationDestination(icon: Icon(Icons.savings_outlined), selectedIcon: Icon(Icons.savings_rounded), label: 'Savings'),
           NavigationDestination(icon: Icon(Icons.insights_outlined), selectedIcon: Icon(Icons.insights_rounded), label: 'Analytics'),
           NavigationDestination(icon: Icon(Icons.smart_toy_outlined), selectedIcon: Icon(Icons.smart_toy_rounded), label: 'AI Chat'),
+          NavigationDestination(icon: Icon(Icons.notifications_outlined), selectedIcon: Icon(Icons.notifications_rounded), label: 'Alerts'),
         ],
       ),
     );

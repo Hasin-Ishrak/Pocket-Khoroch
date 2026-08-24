@@ -13,6 +13,7 @@ import '../pages/savings/goal_calculator_page.dart';
 import '../pages/savings/rate_projector_page.dart';
 import '../pages/subscription/upgrade_page.dart';
 import '../pages/subscription/manage_subscription_page.dart';
+import '../pages/reminders/add_reminder_page.dart';
 
 class AppRouter {
   static GoRouter buildRouter(AuthProvider authProvider) {
@@ -60,6 +61,10 @@ class AppRouter {
         GoRoute(
           path: '/manage-subscription',
           builder: (context, state) => const ManageSubscriptionPage(),
+        ),
+        GoRoute(
+          path: '/add-reminder',
+          builder: (context, state) => const AddReminderPage(),
         ),
       ],
       redirect: (context, state) {
