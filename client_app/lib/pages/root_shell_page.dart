@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import '../pages/home/home_page.dart';
 import '../pages/savings/savings_hub_page.dart';
+import '../pages/analytics/analytics_page.dart';
+import '../pages/chat/chat_page.dart';
 
 class RootShellPage extends StatefulWidget {
   const RootShellPage({super.key});
@@ -15,6 +17,8 @@ class _RootShellPageState extends State<RootShellPage> {
   final _pages = const [
     HomePage(),
     SavingsHubPage(),
+    AnalyticsPage(),
+    ChatPage(),
   ];
 
   @override
@@ -27,6 +31,8 @@ class _RootShellPageState extends State<RootShellPage> {
         destinations: const [
           NavigationDestination(icon: Icon(Icons.home_outlined), selectedIcon: Icon(Icons.home_rounded), label: 'Home'),
           NavigationDestination(icon: Icon(Icons.savings_outlined), selectedIcon: Icon(Icons.savings_rounded), label: 'Savings'),
+          NavigationDestination(icon: Icon(Icons.insights_outlined), selectedIcon: Icon(Icons.insights_rounded), label: 'Analytics'),
+          NavigationDestination(icon: Icon(Icons.smart_toy_outlined), selectedIcon: Icon(Icons.smart_toy_rounded), label: 'AI Chat'),
         ],
       ),
     );

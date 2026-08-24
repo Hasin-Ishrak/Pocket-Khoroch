@@ -1,6 +1,24 @@
-# client_app
+# Pocket Khoroch
 
-A new Flutter project.
+## Run the app
+
+The Gemini API key must not be committed. Create `tool/secrets.secrets.json` locally:
+
+```json
+{
+  "GEMINI_API_KEY": "your-gemini-api-key"
+}
+```
+
+Then run Flutter with:
+
+```powershell
+flutter run -d chrome --dart-define-from-file=tool/secrets.secrets.json
+```
+
+For GitHub Actions or release builds, store `GEMINI_API_KEY` as a repository secret and pass it with `--dart-define=GEMINI_API_KEY=...`.
+
+Note: `dart-define` values are compiled into the client application and are not truly secret. For production, call Gemini through a backend service and keep the API key there.
 
 ## Getting Started
 

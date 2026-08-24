@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:provider/provider.dart';
 import 'firebase_options.dart';
 import 'theme/app_theme.dart';
@@ -18,10 +20,20 @@ import 'repository/savings_repository.dart';
 import 'providers/subscription_provider.dart';
 import 'services/subscription_api_service.dart';
 import 'repository/subscription_repository.dart';
+import 'providers/chat_provider.dart';
+import 'services/ai_service.dart';
+import 'repository/chat_repository.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
+  if (kIsWeb) {
+    FirebaseFirestore.instance.settings = const Settings(
+      persistenceEnabled: false,
+    );
+  }
+
   await LocalStorageService.init();
   runApp(const PocketKhorochApp());
 }
@@ -37,6 +49,8 @@ class PocketKhorochApp extends StatelessWidget {
 
     final localStorageService = LocalStorageService();
     final transactionCloudService = TransactionCloudService();
+    final aiService = AiService();
+    final chatRepository = ChatRepository();
     final subscriptionApiService =
         MockSubscriptionApiService(); // swap to BdAppsSubscriptionApiService later
     final subscriptionRepository = SubscriptionRepository(
@@ -71,6 +85,12 @@ class PocketKhorochApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (_) =>
               SubscriptionProvider(repository: subscriptionRepository),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => ChatProvider(
+            aiService: aiService,
+            chatRepository: chatRepository,
+          ),
         ),
       ],
       child: Consumer2<ThemeProvider, AuthProvider>(
