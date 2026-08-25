@@ -13,8 +13,8 @@ class AuthProvider extends ChangeNotifier {
   AuthProvider({
     required AuthService authService,
     required UserRepository userRepository,
-  })  : _authService = authService,
-        _userRepository = userRepository {
+  }) : _authService = authService,
+       _userRepository = userRepository {
     _init();
   }
 
@@ -73,10 +73,7 @@ class AuthProvider extends ChangeNotifier {
     }
   }
 
-  Future<bool> signIn({
-    required String email,
-    required String password,
-  }) async {
+  Future<bool> signIn({required String email, required String password}) async {
     _setLoading(true);
     try {
       await _authService.signInWithEmail(email: email, password: password);
@@ -100,7 +97,9 @@ class AuthProvider extends ChangeNotifier {
       }
 
       final firebaseUser = credential.user!;
-      final existingProfile = await _userRepository.getUserProfile(firebaseUser.uid);
+      final existingProfile = await _userRepository.getUserProfile(
+        firebaseUser.uid,
+      );
 
       if (existingProfile == null) {
         final newUser = AppUser(
@@ -128,6 +127,31 @@ class AuthProvider extends ChangeNotifier {
 
   Future<void> signOut() async {
     await _authService.signOut();
+  }
+
+  Future<bool> updateProfile({
+    String? displayName,
+    String? university,
+    String? profession,
+  }) async {
+    if (_currentUser == null) return false;
+    _setLoading(true);
+    try {
+      final updated = _currentUser!.copyWith(
+        displayName: displayName,
+        university: university,
+        profession: profession,
+      );
+      await _userRepository.updateUserProfile(updated);
+      _currentUser = updated;
+      _errorMessage = null;
+      return true;
+    } catch (e) {
+      _errorMessage = 'Failed to update profile';
+      return false;
+    } finally {
+      _setLoading(false);
+    }
   }
 
   Future<bool> resetPassword(String email) async {

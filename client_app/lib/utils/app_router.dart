@@ -14,6 +14,8 @@ import '../pages/savings/rate_projector_page.dart';
 import '../pages/subscription/upgrade_page.dart';
 import '../pages/subscription/manage_subscription_page.dart';
 import '../pages/reminders/add_reminder_page.dart';
+import '../pages/chat/chat_page.dart';
+import '../pages/profile/edit_profile_page.dart';
 
 class AppRouter {
   static GoRouter buildRouter(AuthProvider authProvider) {
@@ -65,6 +67,11 @@ class AppRouter {
         GoRoute(
           path: '/add-reminder',
           builder: (context, state) => const AddReminderPage(),
+        ),
+        GoRoute(path: '/chat', builder: (context, state) => const ChatPage()),
+        GoRoute(
+          path: '/edit-profile',
+          builder: (context, state) => const EditProfilePage(),
         ),
       ],
       redirect: (context, state) {

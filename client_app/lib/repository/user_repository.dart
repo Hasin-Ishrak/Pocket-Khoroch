@@ -20,6 +20,10 @@ class UserRepository {
     return AppUser.fromMap(doc.data()!);
   }
 
+  Future<void> updateUserProfile(AppUser user) async {
+    await _usersCollection.doc(user.uid).update(user.toMap());
+  }
+
   Stream<AppUser?> watchUserProfile(String uid) {
     return _usersCollection.doc(uid).snapshots().map((doc) {
       if (!doc.exists) return null;

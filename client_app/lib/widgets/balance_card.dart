@@ -18,12 +18,22 @@ class BalanceCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
+    final cardColor = isDark
+        ? AppColors.darkSurfaceVariant
+        : AppColors.forestGraphite;
+
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: AppColors.forestGraphite,
+        color: cardColor,
         borderRadius: BorderRadius.circular(24),
+        border: isDark
+            ? Border.all(
+                color: AppColors.acidMint.withOpacity(0.25),
+                width: 1.2,
+              )
+            : null,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -111,7 +121,10 @@ class _SummaryItem extends StatelessWidget {
               children: [
                 Text(
                   label,
-                  style: TextStyle(color: Colors.white.withOpacity(0.6), fontSize: 11),
+                  style: TextStyle(
+                    color: Colors.white.withOpacity(0.6),
+                    fontSize: 11,
+                  ),
                 ),
                 Text(
                   CurrencyFormatter.format(amount),
